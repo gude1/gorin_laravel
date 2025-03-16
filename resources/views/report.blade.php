@@ -131,7 +131,7 @@
                         $.each(response.data, function (index, item) {
                             rows += `
                                 <tr>
-                                    <td>${item.model}</td>
+                                    <td>${item.model} / ${item.network}</td>
                                     <td>${item.max_out_of_warehouse}</td>
                                     <td>${item.avg_out_of_warehouse}</td>
                                     <td>${item.total_quantity}</td>
