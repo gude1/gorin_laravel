@@ -25,7 +25,7 @@ class GetReportRequest extends FormRequest
             'start_date' => ['required', 'date', 'before_or_equal:end_date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'item_ids' => ['required', 'array'],
-            'item_ids.*' => ['integer', 'exists:items,id'], // Assumes item IDs are integers and exist in the `items` table
+            'item_ids.*' => ['string', 'exists:items,model'], // Assumes item IDs are integers and exist in the `items` table
         ];
     }
 }

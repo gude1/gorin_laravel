@@ -87,13 +87,13 @@
             // Fetch and populate items in multi-select dropdown
             function fetchItems() {
                 $.ajax({
-                    url: "/api/get-item-list", // Provide the correct URL for fetching items
+                    url: "/api/get-item-list",
                     type: "GET",
                     dataType: "json",
-                    success: function (data) {
+                    success: function (res) {
                         $('#items').empty();
-                        $.each(data.data, function (index, item) {
-                            $('#items').append('<option value="' + item.id + '">' + item.model + '</option>');
+                        $.each(res.data, function (index, item) {
+                            $('#items').append('<option value="' + item.model + '">' + `${item.model} / ${item.network} ` + '</option>');
                         });
                     },
                     error: function () {
@@ -118,12 +118,12 @@
                 }
 
                 $.ajax({
-                    url: "/api/get-report",  // Replace with your provided URL
+                    url: "/api/get-report",
                     type: "POST",
                     data: {
                         start_date: startDate,
                         end_date: endDate,
-                        items: selectedItems
+                        item_ids: selectedItems
                     },
                     dataType: "json",
                     success: function (response) {
@@ -137,7 +137,7 @@
                                     <td>${item.total_quantity}</td>
                                     <td>${item.total_orders}</td>
                                     <td>${item.avg_qty_per_order}</td>
-                                    <td>${item.max_qty_in_order}</td>
+                                    <td>${item.max_quantity_in_order}</td>
                                     <td>${item.current_inventory}</td>
                                     <td class="${item.purchase_amount > 0 ? 'text-danger' : ''}">${item.purchase_amount}</td>
                                 </tr>
@@ -146,7 +146,8 @@
 
                         $('#reportTableBody').html(rows || '<tr><td colspan="9" class="text-center">No records found</td></tr>');
                     },
-                    error: function () {
+                    error: function (err) {
+                        console.log("error", err)
                         alert("Error generating report.");
                     }
                 });
